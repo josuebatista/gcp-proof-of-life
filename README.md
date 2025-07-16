@@ -98,7 +98,54 @@ To test from ServiceNow, use these settings:
 - **Content-Type**: `application/json`
 - **Body**: `{"test": "data from ServiceNow"}`
 
-## Testing Examples
+### Example Test Script in ServiceNow
+From **All > Scripts - Background**
+```
+(function executeRESTCall() {
+	// Define the endpoint URL
+	var endpointUrl = 'https://gcp-proof-of-life-298609520814.us-central1.run.app/ping';
+
+	// Define the request body
+	var requestBody = JSON.stringify({
+		test: "data from ServiceNow"
+	});
+
+	// Create a new RESTMessageV2 object
+	var restMessage = new sn_ws.RESTMessageV2();
+
+	// Set the HTTP method and endpoint
+	restMessage.setHttpMethod('POST');
+	restMessage.setEndpoint(endpointUrl);
+
+	// Set the request headers
+	restMessage.setRequestHeader('Content-Type', 'application/json');
+	restMessage.setRequestHeader('X-API-Key', 'Up43xJOPYCcaKT5qN7Q-JaSmdQAA');
+
+	// Set the request body
+	restMessage.setRequestBody(requestBody);
+
+	try {
+		// Execute the REST call and capture the response
+		var response = restMessage.execute();
+		var responseBody = response.getBody();
+		var httpStatus = response.getStatusCode();
+
+		// Log the response details
+		gs.info('HTTP Status: ' + httpStatus);
+		gs.info('Response Body: ' + responseBody);
+
+		// Parse and return the response body if needed
+		var parsedResponse = JSON.parse(responseBody);
+		return parsedResponse;
+
+	} catch (error) {
+		// Handle and log any errors
+		gs.error('Error executing REST call: ' + error.message);
+	}
+})();
+```
+
+## Testing Examples Using CLI
 
 ### Health Check
 ```bash
