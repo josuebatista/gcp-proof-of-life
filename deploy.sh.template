@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Set variables - REPLACE WITH YOUR VALUES
+PROJECT_ID="YOUR_GCP_PROJECT_ID"
+SERVICE_NAME="gcp-proof-of-life"
+REGION="us-central1"
+API_KEY="YOUR_SECURE_API_KEY_HERE"
+
+# Build and submit the container image
+echo "Building container image..."
+gcloud builds submit --tag gcr.io/$PROJECT_ID/$SERVICE_NAME
+
+# Deploy to Cloud Run
+echo "Deploying to Cloud Run..."
+gcloud run deploy $SERVICE_NAME \
+  --image gcr.io/$PROJECT_ID/$SERVICE_NAME \
+  --platform managed \
+  --region $REGION \
+  --allow-unauthenticated \
+  --set-env-vars API_KEY=$API_KEY \
+  --port 8080 \
+  --memory 512Mi \
+  --cpu 1 \
+  --max-instances 10
+
+echo "Deployment complete!"
+echo "Service URL: https://$SERVICE_NAME-$(gcloud run services describe $SERVICE_NAME --region=$REGION --format='value(status.url)' | cut -d'/' -f3)"
