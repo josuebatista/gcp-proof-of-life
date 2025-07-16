@@ -103,7 +103,7 @@ From **All > Scripts - Background**
 ```
 (function executeRESTCall() {
 	// Define the endpoint URL
-	var endpointUrl = 'https://gcp-proof-of-life-298609520814.us-central1.run.app/ping';
+	var endpointUrl = 'https://gcp-proof-of-life-260810952984.us-central1.run.app/ping';
 
 	// Define the request body
 	var requestBody = JSON.stringify({
@@ -119,7 +119,7 @@ From **All > Scripts - Background**
 
 	// Set the request headers
 	restMessage.setRequestHeader('Content-Type', 'application/json');
-	restMessage.setRequestHeader('X-API-Key', 'Up43xJOPYCcaKT5qN7Q-JaSmdQAA');
+	restMessage.setRequestHeader('X-API-Key', 'Up...');
 
 	// Set the request body
 	restMessage.setRequestBody(requestBody);
